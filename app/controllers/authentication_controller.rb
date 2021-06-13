@@ -1,15 +1,11 @@
 class AuthenticationController < ApplicationController
   def login
-    @user = User.find_by(username: params[:username])
-
+    @user = User.find_by(username: params[:user][:username])
+    # byebug
     if !@user
-      render (
-        json: {
-          message: 'Invalid username or password'
-        }, 
-        status: :unauthorized)
+      render json: { message: 'Invalid username or password' }, status: :unauthorized
     else
-      if !@user.authenticate params[:password]
+      if !@user.authenticate params[:user][:password]
         render json: {message: 'Invalid username or password'}, status: :unauthorized
       else
         payload = {user_id: @user.id}
