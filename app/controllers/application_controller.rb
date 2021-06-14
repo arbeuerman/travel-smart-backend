@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::API
 
-    def find_user_token
+    before_action :authorize_user
+
+    def authorize_user
         auth_headers = request.headers[:Authorization]
         if !auth_headers
             render json: {message: 'must sent token in request'}, status: :forbidden

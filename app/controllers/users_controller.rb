@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-    before_action :find_user_token, only: :index
+    skip_before_action :authorize_user, only: :create, :index
 
     def index
         @users = User.all
