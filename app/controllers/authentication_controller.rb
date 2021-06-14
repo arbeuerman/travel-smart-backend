@@ -18,10 +18,4 @@ class AuthenticationController < ApplicationController
       end
     end
   end
-
-  # def secret
-  # end
-
-
-
 end
