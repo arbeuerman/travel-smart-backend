@@ -12,12 +12,9 @@ class UsersController < ApplicationController
         @user.save
         if @user.valid?
             render json: @user, status: :created
-            # redirect_to user_pantry_path(current_user)
         else
             errors = @user.errors.full_messages
-            # byebug
             render json: errors, status: :bad_request
-            # redirect_to add_to_pantry_path(current_user)
         end
     end
 
