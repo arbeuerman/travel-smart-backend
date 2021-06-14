@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-    skip_before_action :authorize_user, only: [:create, :index]
+    skip_before_action :current_user, only: [:create, :index]
 
     def index
         @users = User.all
@@ -8,9 +8,22 @@ class UsersController < ApplicationController
     end
 
     def create
-        @user = User.create(user_params)
-        render json: @user, status: :created
+        @user = User.new(user_params)
+        @user.save
+        if @user.valid?
+            render json: @user, status: :created
+            # redirect_to user_pantry_path(current_user)
+        else
+            errors = @user.errors.full_messages
+            # byebug
+            render json: errors, status: :bad_request
+            # redirect_to add_to_pantry_path(current_user)
+        end
+    end
 
+    def show
+        @user = current_user
+        render json: current_user, status: :ok
     end
 
     private

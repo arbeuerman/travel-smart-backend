@@ -1,26 +1,30 @@
 class ApplicationController < ActionController::API
 
-    before_action :authorize_user
+    before_action :current_user
+
+    def auth_header
+        request.headers[:Authorization]
+    end
 
     def authorize_user
-        auth_headers = request.headers[:Authorization]
-        if !auth_headers
-            render json: {message: 'must sent token in request'}, status: :forbidden
+        if !auth_header
+            render json: {message: 'must send token in request'}, status: :forbidden
         else
-            token = auth_headers.split(' ')[1]
+            token = auth_header.split(' ')[1]
             secret = 'randomstringwith12345'
             begin
-                decoded_token = JWT.decode token, secret
-                payload = decoded_token.first 
-                @user = User.find(payload['user_id'])
+                JWT.decode token, secret
             rescue
-                render json: {message: 'invlaid token'}, status: :forbidden
+                render json: {message: 'invalid token'}, status: :forbidden
             end
         end
     end
 
-    # def current_user
-
-    # end
+    def current_user
+        if authorize_user
+            payload = authorize_user.first 
+            @user = User.find(payload['user_id'])
+        end
+    end
 
 end

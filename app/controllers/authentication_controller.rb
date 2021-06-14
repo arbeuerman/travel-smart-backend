@@ -1,6 +1,6 @@
 class AuthenticationController < ApplicationController
 
-  skip_before_action :authorize_user
+  skip_before_action :current_user
 
   def login
     @user = User.find_by(username: params[:user][:username])
