@@ -18,9 +18,9 @@ class UsersController < ApplicationController
         end
     end
 
-    def show
-        @user = current_user
-        render json: current_user, status: :ok
+    def profile
+        # byebug
+        render json: @user, status: :ok
     end
 
     private
