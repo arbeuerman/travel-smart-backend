@@ -19,6 +19,9 @@ class FavoritesController < ApplicationController
     end
 
     def delete
-        byebug
+        @user = current_user
+        @activity = Activity.find_by(name: params["favoritedActivity"]["name"])
+        @favorite = Favorite.find_by(user_id: @user.id, activity_id: @activity.id)
+        @favorite.destroy
     end 
 end

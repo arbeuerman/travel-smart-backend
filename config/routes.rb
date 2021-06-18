@@ -2,7 +2,8 @@ Rails.application.routes.draw do
   get 'travel/location'
 
   # post '/favorites/:location', to: 'favorites#create'
-  resources :favorites, only: [:index, :create, :delete]
+  delete '/favorites', to: 'favorites#delete'
+  resources :favorites, only: [:index, :create]
   
   resources :users, only: [:index, :create]
   get '/profile', to: 'users#profile'
