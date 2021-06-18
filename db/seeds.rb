@@ -7,8 +7,10 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-# Activity.destroy_all
-# Activity.reset_pk_sequence
+Favorite.destroy_all
+Favorite.reset_pk_sequence
+Activity.destroy_all
+Activity.reset_pk_sequence
 
 # Bangalore,12.92321,77.642256
 # Barcelona,41.397158,2.160873
@@ -19,36 +21,13 @@
 # London,51.520180,-0.169882
 # New York,40.792027,-74.058204
 
-# 10.times do 
-#     Activity.create(
-#         name: Faker::Mountain.unique.name,
-#         location: Faker::Nation.unique.capital_city,
-#         imageUrl: Faker::Avatar.unique.image,
-#         category: ["hiking", "food", "drinks", "museums", "culture"].sample
-#         )
+# Activity.all.each do |activity|
+#     if activity.imageUrl
+#         ActivityImage.create(activityName: activity.name, imageUrl: activity.imageUrl)
+#     end
 # end
 
-##################################
-###### Trying to Access API ######
-##################################
 
-#use the external api query here
-amadeus = Amadeus::Client.new({
-    client_id: '8vcUEDJFv2UhYzwB5KmgTlRyC76jMD5H',
-    client_secret: 'BAV4rSS5k1XoQ1dq'
-})
 
-cities = CSV.parse(File.read("cities - Sheet1.csv"), headers: true)
-cities_hash = {}
-cities.each do |city_data|
-    cities_hash[city_data["city"]] = [city_data["latitude"],city_data["longitude"]]
-end
-cityActivities = {}
-cities_hash.each do |city, coordinates|
-    pointsOfInterest = amadeus.reference_data.locations.points_of_interest.get(latitude: coordinates[0], longitude: coordinates[1])
-    byebug
-    #extract data
-    pointsOfInterest.data.each do |pointOfInterest|
-        Activity.create(name: pointOfInterest["name"], location: city, category: pointOfInterest["tags"].join(" "))
-    end
-end
+
+

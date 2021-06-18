@@ -1,9 +1,24 @@
 class FavoritesController < ApplicationController
 
     def index
-        @current_user = current_user
-        byebug
         @favorites = Favorite.all
         render json: @favorites, status: :ok
     end
+    
+    def create
+        activity_params = params[:activity]
+        location = params[:location]
+        @user = current_user
+        @activity = Activity.create(
+            name: activity_params["name"], 
+            location: location, 
+            category: activity_params["tags"].join(" ")
+            )
+        @favorite = Favorite.create(user_id: @user.id, activity_id: @activity.id)
+        # byebug
+    end
+
+    def delete
+        byebug
+    end 
 end
