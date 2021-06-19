@@ -9,13 +9,16 @@ class FavoritesController < ApplicationController
         activity_params = params[:activity]
         location = params[:location]
         @user = current_user
-        @activity = Activity.create(
+        @activity = Activity.find_or_create_by(
             name: activity_params["name"], 
             location: location, 
             category: activity_params["tags"].join(" ")
             )
+        activityImage = ActivityImage.find_by(activityName: @activity.name)
+        if activityImage
+            @activity.update(imageUrl: activityImage.imageUrl)
+        end
         @favorite = Favorite.create(user_id: @user.id, activity_id: @activity.id)
-        # byebug
     end
 
     def delete
