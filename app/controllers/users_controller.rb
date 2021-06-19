@@ -19,7 +19,6 @@ class UsersController < ApplicationController
     end
 
     def profile
-        # byebug
         render json: @user, status: :ok
     end
 

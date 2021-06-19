@@ -1,7 +1,8 @@
 class FavoritesController < ApplicationController
 
     def index
-        @favorites = Favorite.all
+        @user = current_user
+        @favorites = @user.activities
         render json: @favorites, status: :ok
     end
     
