@@ -5,7 +5,8 @@ Rails.application.routes.draw do
   delete '/favorites', to: 'favorites#delete'
   resources :favorites, only: [:index, :create]
   
-  resources :users, only: [:index, :create]
+  # patch '/users/:id', to: 'users#edit'
+  resources :users, only: [:index, :create, :update]
   get '/profile', to: 'users#profile'
   
   post '/login', to: 'authentication#login'
