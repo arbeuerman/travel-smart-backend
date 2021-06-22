@@ -43,6 +43,10 @@ class UsersController < ApplicationController
         render json: @user, status: :ok
     end
 
+    def logout
+        byebug
+    end
+
     private
     def user_params
         params.require(:user).permit(:username, :password, :imageUrl, :bio)

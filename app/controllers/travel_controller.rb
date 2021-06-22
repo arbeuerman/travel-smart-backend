@@ -7,9 +7,12 @@ class TravelController < ApplicationController
   def location
     input_location = params[:location]
     #extract data
-    latitude = cities[input_location][0]
-    longitude = cities[input_location][1]
-    location_points_of_interest = points_of_interest(latitude, longitude)
+    north = cities[input_location][0]
+    west = cities[input_location][1]
+    south = cities[input_location][2]
+    east = cities[input_location][3]
+    location_points_of_interest = points_of_interest(north, west, south, east)
+    images = get_images(location_points_of_interest)
     render json: location_points_of_interest.result, status: :ok
   end
 
@@ -32,6 +35,10 @@ class TravelController < ApplicationController
 
   def points_of_interest(inp_latitude, inp_longitude)
     amadeus_client.reference_data.locations.points_of_interest.get(latitude: inp_latitude, longitude: inp_longitude)
+  end
+
+  def get_images(poi_json)
+    byebug
   end
 
 end

@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get '/profile', to: 'users#profile'
   
   post '/login', to: 'authentication#login'
+  # delete '/logout', to: 'authentication#logout'
   
   get '/activities/:location', to: 'travel#location'
   resources :activities, only: [:index]

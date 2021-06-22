@@ -15,15 +15,18 @@ class ApplicationController < ActionController::API
             begin
                 JWT.decode token, secret
             rescue
-                render json: {message: 'invalid token'}, status: :forbidden
+                nil
             end
         end
     end
-
+    
     def current_user
+        # byebug
         if authorize_user
             payload = authorize_user.first 
             @user = User.find(payload['user_id'])
+        else
+            render json: {message: 'invalid token'}, status: :forbidden
         end
     end
 
