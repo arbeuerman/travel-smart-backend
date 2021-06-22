@@ -32,10 +32,10 @@ class UsersController < ApplicationController
                 render json: @user, status: :ok
             else
                 errors = @user.errors.full_messages
-                render json: errors, status: :bad_request 
+                render json: {message: errors} , status: :bad_request 
             end
         else
-            render json: message {'please log in'}, status: :forbidden
+            render json: {message: 'please log in'}, status: :forbidden
         end
     end
 
