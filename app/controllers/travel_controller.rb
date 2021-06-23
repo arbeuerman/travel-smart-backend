@@ -12,11 +12,9 @@ class TravelController < ApplicationController
     south = cities[input_location][2]
     east = cities[input_location][3]
     location_points_of_interest = points_of_interest(north, west, south, east)
-<<<<<<< HEAD
-    images = get_images(location_points_of_interest)
-=======
->>>>>>> fe1aa99 (updating latitude and longitude)
-    render json: location_points_of_interest.result, status: :ok
+    points_of_interest_plus_images = get_images(location_points_of_interest.data)
+    # location_points_of_interest.result
+    render json: points_of_interest_plus_images, status: :ok
   end
 
   private
@@ -52,7 +50,11 @@ class TravelController < ApplicationController
   end
 
   def get_images(poi_json)
-    byebug
+    poi_json.each do |point_of_interest|
+      activityImage = ActivityImage.find_by(activityName: point_of_interest["name"])
+      point_of_interest["image"] = activityImage.imageUrl
+    end
+    return poi_json
   end
 
 end
