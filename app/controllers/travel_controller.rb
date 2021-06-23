@@ -52,7 +52,7 @@ class TravelController < ApplicationController
   def get_images(poi_json)
     poi_json.each do |point_of_interest|
       activityImage = ActivityImage.find_by(activityName: point_of_interest["name"])
-      point_of_interest["image"] = activityImage.imageUrl
+      point_of_interest["imageUrl"] = activityImage.imageUrl
     end
     return poi_json
   end

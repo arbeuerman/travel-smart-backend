@@ -1,7 +1,6 @@
 class FavoritesController < ApplicationController
 
     def index
-        @user = current_user
         @favorites = @user.activities
         render json: @favorites, status: :ok
     end
@@ -19,6 +18,7 @@ class FavoritesController < ApplicationController
         if activityImage
             @activity.update(imageUrl: activityImage.imageUrl)
         end
+        byebug
         @favorite = Favorite.create(user_id: @user.id, activity_id: @activity.id)
     end
 

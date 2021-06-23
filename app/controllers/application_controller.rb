@@ -21,7 +21,6 @@ class ApplicationController < ActionController::API
     end
     
     def current_user
-        # byebug
         if authorize_user
             payload = authorize_user.first 
             @user = User.find(payload['user_id'])
